@@ -1,5 +1,6 @@
 class V1::ProjectsController < ApplicationController
-  before_action :set_organization
+  before_action :set_organization, except: %i[project_users assign_user]
+
   before_action :set_project, only: %i[show update destroy]
 
   def index
@@ -36,6 +37,27 @@ class V1::ProjectsController < ApplicationController
       render json: { error: 'Project not found or already deleted' }, status: :not_found
     end
   end
+
+  # member and collection
+
+  def assign_user
+    project = Project.find(params[:project_id])
+    user = User.find(params[:user_id])
+    if project.users.exists?(user.id)
+      render json: { error: 'User is already assigned to the project' }
+    else
+      project.users << user
+
+      render json: { project_users: project.users }
+    end
+  end
+
+  def project_users
+    render json: { status: 'ok' }
+  end
+
+  # Porject has users
+  # project.users << user
 
   private
 
