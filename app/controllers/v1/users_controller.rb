@@ -47,6 +47,6 @@ class V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:users).permit(:email)
+    params.require(:users).permit(:email, :organization_id)
   end
 end

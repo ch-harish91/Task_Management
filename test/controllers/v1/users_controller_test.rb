@@ -2,8 +2,8 @@ require 'test_helper'
 
 class V1::UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @organization = Organization.create(name: "test-org")
-    @user = User.create(email:'test@example.com', organization: @organization) # Create a sample user for tests
+    @organization = Organization.create(name: 'test-org')
+    @user = User.create(email: 'test@example.com', organization: @organization) # Create a sample user for tests
   end
 
   test 'should get index' do
@@ -25,7 +25,7 @@ class V1::UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create user' do
     assert_difference('User.count') do
-      post v1_users_url, params: { users: { email: 'newuser@example.com' } }
+      post v1_users_url, params: { users: { email: 'newuser@example.com', organization_id: @organization.id } }
     end
 
     assert_response :created
