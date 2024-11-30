@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :users do
       resource :profile
     end
-    resources :organizations
+    resources :organizations do
+      resources :projects
+    end
   end
 end
